@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b1017">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Hobile: Outbreak</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="rotate">
+  <div class="rotate-card">
+    <div class="rotate-icon">↻</div>
+    <b>ROTATE YOUR PHONE</b>
+    <p>Hobile: Outbreak is designed for landscape play.</p>
+  </div>
+</div>
+
+<section id="menu" class="screen">
+  <div class="menu-bg"></div>
+  <header class="topbar">
+    <div class="brand">HOBILE <span>OUTBREAK</span></div>
+    <div class="build-tag">2.5D CO-OP · V1</div>
+  </header>
+
+  <div class="menu-content">
+    <div class="hero">
+      <div class="eyebrow">ORIGINAL CO-OP ZOMBIE CAMPAIGN</div>
+      <h1>RUN.<br><span>FIGHT.</span><br>SURVIVE.</h1>
+      <p>Push through infected territory as a squad, survive dynamic hordes, rescue teammates and reach the safehouse.</p>
+      <div class="menu-actions">
+        <button id="soloBtn" class="btn primary">PLAY CHAPTER 1</button>
+        <button id="createBtn" class="btn online">CREATE CO-OP ROOM</button>
+        <button id="joinBtn" class="btn secondary">JOIN ROOM</button>
+        <button id="armoryBtn" class="btn ghost">ARMORY</button>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-art">
+        <div class="moon"></div>
+        <div class="ridge r1"></div>
+        <div class="ridge r2"></div>
+        <div class="city"></div>
+      </div>
+      <div class="chapter-info">
+        <small>CAMPAIGN 01 · CHAPTER 01</small>
+        <h2>ASHWOOD ROAD</h2>
+        <p>Abandoned suburb → forest service road → evacuation shelter.</p>
+        <div class="chapter-tags">
+          <span>15–25 MIN</span><span>6 INFECTED TYPES</span><span>DYNAMIC DIRECTOR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="joinModal" class="overlay hidden">
+  <div class="panel compact">
+    <h2>JOIN CO-OP</h2>
+    <p>Enter the 5-character room code.</p>
+    <div class="input-row">
+      <input id="joinCode" maxlength="5" placeholder="ABCDE" autocapitalize="characters" autocomplete="off">
+      <button id="joinNow" class="btn primary">JOIN</button>
+    </div>
+    <button id="joinCancel" class="btn ghost full">CANCEL</button>
+  </div>
+</div>
+
+<div id="lobby" class="overlay hidden">
+  <div class="panel lobby-panel">
+    <div class="lobby-head">
+      <div>
+        <small>ONLINE CO-OP ROOM</small>
+        <div id="roomCode" class="room-code">-----</div>
+      </div>
+      <div id="netState" class="net-state">CONNECTING</div>
+    </div>
+
+    <div class="share-row">
+      <button id="shareBtn" class="btn online">SHARE ROOM LINK</button>
+      <button id="copyBtn" class="btn secondary">COPY LINK</button>
+    </div>
+
+    <div class="lobby-grid">
+      <div>
+        <h3>SQUAD</h3>
+        <div id="playerList" class="player-list"></div>
+      </div>
+      <div class="lobby-side">
+        <label>YOUR NAME</label>
+        <div class="input-row">
+          <input id="playerName" maxlength="16" placeholder="Survivor">
+          <button id="saveName" class="btn secondary">SAVE</button>
+        </div>
+        <label>DIFFICULTY</label>
+        <select id="difficulty">
+          <option value="normal">NORMAL</option>
+          <option value="hard">HARD</option>
+          <option value="nightmare">NIGHTMARE</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="lobbyHint" class="lobby-hint">Waiting for another survivor…</div>
+    <button id="startOnline" class="btn primary full" disabled>START CHAPTER</button>
+    <button id="leaveLobby" class="btn ghost full">LEAVE ROOM</button>
+  </div>
+</div>
+
+<div id="armory" class="overlay hidden">
+  <div class="panel armory-panel">
+    <div class="panel-title-row">
+      <div>
+        <small>PERMANENT PROGRESSION</small>
+        <h2>ARMORY</h2>
+      </div>
+      <div class="scrap-badge">SCRAP <b id="scrap">0</b></div>
+    </div>
+    <div id="armoryGrid" class="armory-grid"></div>
+    <button id="armoryClose" class="btn ghost full">BACK</button>
+  </div>
+</div>
+
+<div id="loading" class="overlay hidden">
+  <div class="loading-card">
+    <div class="loading-logo">HOBILE <span>OUTBREAK</span></div>
+    <h2>ASHWOOD ROAD</h2>
+    <p id="loadingText">Preparing route…</p>
+    <div class="bar"><i id="loadingBar"></i></div>
+  </div>
+</div>
+
+<div id="hud" class="hidden">
+  <div class="squad-hud">
+    <div class="portrait me">
+      <div class="avatar-mini"></div>
+      <div>
+        <small>YOU</small>
+        <div class="hpbar"><i id="hpBar"></i></div>
+        <span id="hpText">100</span>
+      </div>
+    </div>
+    <div id="mateHud" class="portrait hidden">
+      <div class="avatar-mini mate"></div>
+      <div>
+        <small id="mateName">PARTNER</small>
+        <div class="hpbar"><i id="mateHpBar"></i></div>
+        <span id="mateHpText">100</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-center">
+    <div id="objective">REACH THE SAFEHOUSE</div>
+    <div class="routebar"><i id="routeProgress"></i><b id="routeMarker"></b></div>
+  </div>
+
+  <div id="directorBadge" class="director-badge">CALM</div>
+  <div id="waveBanner" class="wave-banner"></div>
+  <div id="centerMsg" class="center-msg"></div>
+
+  <div class="weapon-panel">
+    <small id="weaponName">RIPPER SMG</small>
+    <b><span id="ammo">32</span><em>/</em><span id="reserve">160</span></b>
+    <div class="weapon-level">LV <span id="weaponLevel">1</span></div>
+  </div>
+
+  <div id="pickupToast" class="pickup-toast"></div>
+  <div id="damageFlash" class="damage-flash"></div>
+  <div id="vignette" class="vignette"></div>
+</div>
+
+<div id="controls" class="hidden">
+  <div id="joystick"><div id="stick"></div></div>
+  <button id="fireBtn" class="control fire">FIRE</button>
+  <button id="jumpBtn" class="control jump">JUMP</button>
+  <button id="reloadBtn" class="control reload">R</button>
+  <button id="useBtn" class="control use">USE</button>
+  <button id="swapBtn" class="control swap">SWAP</button>
+  <button id="pauseBtn" class="control pause">☰</button>
+</div>
+
+<div id="pause" class="overlay hidden">
+  <div class="panel compact">
+    <h2>PAUSED</h2>
+    <button id="resumeBtn" class="btn primary full">RESUME</button>
+    <button id="quitBtn" class="btn ghost full">QUIT TO MENU</button>
+  </div>
+</div>
+
+<div id="stageClear" class="overlay hidden">
+  <div class="panel clear-panel">
+    <small>CHAPTER COMPLETE</small>
+    <h2>ASHWOOD ROAD CLEARED</h2>
+    <div class="results-grid">
+      <div><b id="resultKills">0</b><small>KILLS</small></div>
+      <div><b id="resultSpecial">0</b><small>SPECIALS</small></div>
+      <div><b id="resultScrap">0</b><small>SCRAP</small></div>
+      <div><b id="resultTime">0:00</b><small>TIME</small></div>
+    </div>
+    <button id="continueBtn" class="btn primary full">RETURN TO CAMP</button>
+  </div>
+</div>
+
+<div id="fatal" class="overlay hidden">
+  <div class="panel compact">
+    <h2>ONLINE CONNECTION ERROR</h2>
+    <p id="fatalText"></p>
+    <button id="fatalClose" class="btn ghost full">BACK TO MENU</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="core.js"></script>
+<script src="network.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+PASS stage bounds
+PASS weapon roster
+PASS infected roster
+PASS weapon upgrades
+PASS upgrade economy
+PASS room code generation
+PASS presence + host election
+PASS enemy budget chooser
+PASS shooting target selection
+PASS director milestone horde
+10/10 core tests passed
+
+PASS core.js syntax
+PASS network.js syntax
+PASS game.js syntax

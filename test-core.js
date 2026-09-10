@@ -1,0 +1,23 @@
+const assert=require("assert"),C=require("./core.js");
+assert(C.STAGE.exitX<C.STAGE.width);
+assert(Object.keys(C.WEAPONS).length===3);
+assert(Object.keys(C.ENEMIES).length>=6);
+assert(C.weaponStats("smg",5).damage>C.weaponStats("smg",1).damage);
+assert(C.weaponStats("smg",5).reload<C.weaponStats("smg",1).reload);
+assert(C.upgradeCost(5)>C.upgradeCost(1));
+let seq=[0,.1,.2,.3,.4],i=0;assert.strictEqual(C.makeRoomCode(()=>seq[i++]),"ADGKN");
+const ps=C.flattenPresence({a:[{id:"a",creator:true,joinedAt:3}],b:[{id:"b",joinedAt:2}]});assert.strictEqual(ps.length,2);assert.strictEqual(C.electHost(ps),"a");
+const r=new C.RNG(123);for(let n=0;n<20;n++){const [t,c]=C.chooseEnemy(r,12,.9,true);assert(C.ENEMIES[t]&&c<=12)}
+const e=[{id:"a",x:100,lane:0,hp:60},{id:"b",x:300,lane:0,hp:60}],sh={x:0,lane:0,facing:1};assert.strictEqual(C.lineShotTarget(sh,e,500).id,"a");
+let d={time:0,intensity:0,cooldown:99,nextMilestone:0};let o=C.directorStep(d,{avgHp:100,nearby:0,progress:.2,ammoRatio:1,checkpointIndex:1,alivePlayers:1,spawnMult:1},.1);assert(o.event&&o.event.type==="horde");
+console.log("PASS stage bounds");
+console.log("PASS weapon roster");
+console.log("PASS infected roster");
+console.log("PASS weapon upgrades");
+console.log("PASS upgrade economy");
+console.log("PASS room code generation");
+console.log("PASS presence + host election");
+console.log("PASS enemy budget chooser");
+console.log("PASS shooting target selection");
+console.log("PASS director milestone horde");
+console.log("10/10 core tests passed");
