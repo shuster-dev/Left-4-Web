@@ -1,3 +1,19 @@
+# Hobile: Outbreak — Third Person Gate V4
+
+This build converts the Visual Gate into a true over-the-shoulder third-person mobile shooter.
+
+## Changes
+- Close shoulder camera behind the survivor
+- Camera-relative movement
+- Right-stick camera look with persistent yaw/pitch
+- Center-screen crosshair and hit feedback
+- Character always aims where the camera aims
+- Camera obstruction pull-in using environment raycasts
+- Existing infected, Director, weapons, rain, lighting, extraction and effects retained
+
+## Test target
+The important question for this build is camera/combat feel on iPhone Safari. Multiplayer is intentionally not in this visual gate.
+
 # Hobile: Outbreak — Visual Gate V3
 
 This build deliberately replaces the old flat Canvas prototype with a **3D-rendered 2.5D mobile combat slice**.

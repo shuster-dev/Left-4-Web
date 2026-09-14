@@ -1,3 +1,13 @@
+THIRD PERSON V4
+PASS game.js syntax
+PASS core.js syntax
+PASS weapon definitions
+PASS infected archetypes
+PASS hitscan target selection
+PASS director reaches horde phase
+PASS time formatter
+5/5 core tests passed
+
 Hobile: Outbreak — Visual Gate V3
 Static / logic verification
 
