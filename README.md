@@ -1,42 +1,33 @@
-# Hobile: Outbreak — Combat Polish V5
+# Hobile: Outbreak — iPhone Fix V5.2
 
-This build is a focused third-person gameplay repair pass based on the iPhone screen recording from V4.
-It is intentionally **not** the multiplayer/campaign build yet. The goal is to make the basic mobile shooter loop stable before reconnecting rooms and four-player co-op.
+Focused repair pass from the 11:15 iPhone recording. This is still the single-player combat gate before multiplayer is reattached.
 
-## V5 fixes
+## Fixes made from the recording
 
-- New rigged third-person survivor with actual idle / walk / run clips.
-- Acceleration/deceleration instead of instant sliding.
-- Camera-relative movement with analogue dead-zone and response curve.
-- Correct vertical look direction on the right stick.
-- Stable over-the-shoulder camera with geometry collision and smooth pull-in / pull-out.
-- Environment-derived movement colliders so the survivor cannot freely walk through scenery.
-- Enemy movement uses the same collision layer and cannot damage through blocked line-of-sight.
-- Enemy attack wind-up and short player hurt cooldown prevent instant HP deletion when a horde overlaps.
-- Center-screen 3D hitscan shooting replaces the old flat X/Z cone test.
-- World occlusion: bullets stop at cover instead of passing through fences/walls/props.
-- Head/body hit volumes, headshot multiplier, hit/kill markers, moving spread and recoil recovery.
-- Light mobile aim assist only when the target is visible.
-- Shotgun pellet simulation through the same camera ray model.
-- Enemy separation is stronger to reduce one-model piles.
-- Lower GPU cost: fewer rain particles, no dynamic shadows for infected, 512 shadow map, lower DPR cap, infected population cap.
-- Automatic PERFORMANCE mode when sustained FPS is too low.
-- Fullscreen request on Play where supported.
-- PWA manifest + Add to Home Screen support for a cleaner iPhone fullscreen experience.
+- Darkened/tinted the Stalker materials to remove the blown-out white silhouette visible on iPhone.
+- Closer over-the-shoulder camera composition.
+- Faster camera collision pull-in and precise mesh collision for thin fences/poles.
+- More responsive mobile look stick and tighter movement acceleration/deceleration.
+- Smaller dead zone to remove the delayed/slippery feeling at the start of a swipe.
+- Exact mesh raycast for bullets, so thin environment geometry can block shots.
+- Two-stage camera-to-target then muzzle-to-target hitscan remains in place for crosshair consistency.
+- Muzzle origin moved to agree better with the shoulder camera.
+- Reduced mobile recoil shake while preserving weapon kick.
+- Stronger infected separation and fewer common infected allowed to occupy attack slots simultaneously.
+- Longer player hurt cooldown to prevent overlapping infected from deleting HP instantly.
+- Better enemy locomotion clip priority.
+- iOS pointer safety: global pointer-up/cancel/blur resets FIRE and both sticks to prevent stuck movement/firing.
+- Per-weapon magazine/reserve persistence remains fixed from V5.1.
+- Floating procedural gun remains hidden when the character model has no valid right-hand socket.
+- Service-worker cache bumped so Vercel does not keep the previous combat build.
 
-## Controls
+## Important
 
-- Left stick: camera-relative movement
-- Right stick: camera look / aim
-- FIRE: hold for automatic weapons
-- R: reload
-- +: medkit
-- ↔: weapon switch
+This pass targets control, camera, hit registration and combat stability. The current CC0 environment and character pack is still low-poly; code tuning cannot turn those assets into Left 4 Dead 2 visual fidelity. A higher-fidelity art/animation pipeline is a separate milestone after the combat gate is stable.
 
-## Important limitation
+## iPhone
 
-V5 is designed to move the **feel** closer to a polished co-op third-person shooter, but it is not Valve's Left 4 Dead 2 engine and does not use Valve assets or maps. The environment and infected are original CC0 development assets. Online rooms stay disabled until this gameplay layer is stable on the target iPhone.
+For the cleanest fullscreen presentation, add the deployed site to the iPhone Home Screen and launch it there. Normal Safari tabs keep browser chrome visible.
 
-## Deployment
-
-Upload the entire ZIP/folder to Vercel. The `/api/asset` function proxies the GLB files and the browser also has direct CDN fallback.
+## Tests
+Run `npm test`.

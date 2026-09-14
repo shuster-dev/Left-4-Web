@@ -78,3 +78,26 @@ export function chooseAimTarget(origin,dir,enemies,maxRange,assistAngle,boxes=[]
  return best;
 }
 export function formatTime(sec){sec=Math.max(0,Math.floor(sec));return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
+
+
+export function makeWeaponInventory(){
+ return Object.fromEntries(Object.entries(WEAPONS).map(([id,w])=>[id,{ammo:w.mag,reserve:w.reserve}]));
+}
+export function switchWeaponState(inventory,currentId,nextId,currentAmmo,currentReserve){
+ const inv={...inventory,[currentId]:{ammo:Math.max(0,currentAmmo|0),reserve:Math.max(0,currentReserve|0)}};
+ const fallback=WEAPONS[nextId]||WEAPONS.ar;
+ const next=inv[nextId]||{ammo:fallback.mag,reserve:fallback.reserve};
+ inv[nextId]={ammo:next.ammo,reserve:next.reserve};
+ return {inventory:inv,ammo:next.ammo,reserve:next.reserve};
+}
+export function selectAttackers(enemies,px,pz,maxCommon=3){
+ const alive=(enemies||[]).filter(e=>!e.dead&&e.hp>0).map(e=>({e,d:Math.hypot(e.x-px,e.z-pz)})).sort((a,b)=>a.d-b.d);
+ const out=new Set(),common=[];
+ for(const item of alive){
+  const cfg=INFECTED[item.e.type];
+  if(cfg?.special&&item.d<Math.max(2.2,cfg.range+1.1))out.add(item.e.id);
+  else if(!cfg?.special)common.push(item);
+ }
+ for(const item of common.slice(0,maxCommon))out.add(item.e.id);
+ return out;
+}

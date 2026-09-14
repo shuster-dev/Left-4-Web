@@ -1,1 +1,9 @@
-{"name":"hobile-outbreak-combat-polish-v5","private":true,"type":"module"}
+{
+  "name": "hobile-outbreak-iphone-fix-v5-2",
+  "private": true,
+  "type": "module",
+  "version": "5.2.0",
+  "scripts": {
+    "test": "node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs"
+  }
+}

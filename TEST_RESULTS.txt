@@ -1,3 +1,7 @@
+Hobile Outbreak V5.2 automated checks
+PASS game.js syntax
+PASS core.js syntax
+PASS api/asset.js syntax
 PASS weapon roster
 PASS infected roster
 PASS player collision
@@ -7,10 +11,11 @@ PASS ray/box occlusion
 PASS aim assist visibility
 PASS director cycle
 PASS timer formatting
-9/9 combat core tests passed
+PASS per-weapon ammo persistence
+PASS infected attack-slot cap
+11/11 combat core tests passed
 
-PASS game.js syntax
-PASS core.js syntax
-PASS api/asset.js syntax
-PASS PWA manifest present
-PASS service worker present
+Manual review source: iPhone recording 2026-09-14 11:15.
+Patched from that recording: camera clipping/composition, mobile response, shot occlusion, muzzle/crosshair agreement, white Stalker material, enemy dogpiling, damage cadence, and multi-touch lost-pointer safety.
+
+NOTE: final live rendering still requires deployment because GLB assets load through the Vercel asset route / CDN.
