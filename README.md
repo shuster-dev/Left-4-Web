@@ -31,3 +31,14 @@ For the cleanest fullscreen presentation, add the deployed site to the iPhone Ho
 
 ## Tests
 Run `npm test`.
+
+
+## V5.3 iPhone recording fixes
+- Reverted the over-aggressive V5.2 camera collapse that could hide the survivor.
+- 3.55 m shoulder camera with a 1.58 m hard minimum distance.
+- Foreground meshes between camera and survivor fade temporarily instead of swallowing the player model.
+- Spawn selection prefers open clearance instead of the first barely-valid collision point.
+- Survivor and infected silhouettes are larger/brighter for mobile readability.
+- Added a soft player fill light so the back/shoulders remain readable in the dark scene.
+- Slightly slower look response and less abrupt locomotion acceleration for a heavier co-op-shooter feel.
+- Debug HUD now reports actual camera distance to make iPhone recordings actionable.

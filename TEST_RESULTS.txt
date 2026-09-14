@@ -1,7 +1,7 @@
-Hobile Outbreak V5.2 automated checks
-PASS game.js syntax
-PASS core.js syntax
-PASS api/asset.js syntax
+
+> hobile-outbreak-third-person-stability-v5-3@5.3.0 test
+> node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs
+
 PASS weapon roster
 PASS infected roster
 PASS player collision
@@ -15,7 +15,11 @@ PASS per-weapon ammo persistence
 PASS infected attack-slot cap
 11/11 combat core tests passed
 
-Manual review source: iPhone recording 2026-09-14 11:15.
-Patched from that recording: camera clipping/composition, mobile response, shot occlusion, muzzle/crosshair agreement, white Stalker material, enemy dogpiling, damage cadence, and multi-touch lost-pointer safety.
-
-NOTE: final live rendering still requires deployment because GLB assets load through the Vercel asset route / CDN.
+PASS camera hard minimum
+PASS foreground occluder fade
+PASS survivor frustum protection
+PASS open-clearance spawn
+PASS player fill light
+PASS immediate service worker update
+PASS build label V5.3
+7/7 V5.3 static regression checks passed
