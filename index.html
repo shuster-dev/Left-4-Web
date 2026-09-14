@@ -1,114 +1,125 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#071014">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="format-detection" content="telephone=no">
-<title>Hobile: Outbreak</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#05080b" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>Hobile: Outbreak — Visual Gate</title>
+<link rel="stylesheet" href="style.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
+<div id="boot" class="screen">
+  <div class="bootShade"></div>
+  <div class="bootPanel">
+    <div class="kicker">HOBILE // CAMPAIGN PROTOTYPE</div>
+    <h1>OUTBREAK</h1>
+    <div class="chapter">VISUAL GATE 03 · FOREST EXTRACTION</div>
+    <p>This build is intentionally small: one cinematic combat arena, one survivor, three infected archetypes and a complete mobile combat loop.</p>
+    <button id="startBtn" class="primary" disabled>LOADING ASSETS…</button>
+    <div class="loadTrack"><i id="loadBar"></i></div>
+    <div id="loadText" class="loadText">Preparing renderer…</div>
+    <div class="qualityRow">
+      <button id="qualityBtn" class="chip">QUALITY: HIGH</button>
+      <button id="controlsBtn" class="chip">MOBILE 2.5D</button>
+    </div>
+  </div>
+</div>
+
+<div id="fatal" class="screen hidden">
+  <div class="fatalCard">
+    <div class="fatalMark">!</div>
+    <h2>ASSET LOAD FAILED</h2>
+    <p id="fatalText">The visual pack could not be loaded.</p>
+    <button id="retryBtn" class="primary">RETRY</button>
+  </div>
+</div>
+
+<div id="rotate" class="hidden">
+  <div><b>ROTATE PHONE</b><span>Landscape is required.</span></div>
+</div>
+
 <canvas id="game"></canvas>
 
-<div id="rotate" aria-hidden="true">
-  <div class="rotate-card"><div class="rotate-icon">↻</div><b>ROTATE PHONE</b><span>Hobile: Outbreak is built for landscape.</span></div>
-</div>
-
-<section id="menu" class="screen">
-  <div class="menu-noise"></div>
-  <header class="topbar">
-    <div class="brand">HOBILE <span>OUTBREAK</span></div>
-    <div class="build">MOBILE CO-OP · ALPHA 1</div>
-  </header>
-  <div class="menu-wrap">
-    <div class="hero-copy">
-      <div class="eyebrow">ORIGINAL 2.5D CO-OP ZOMBIE CAMPAIGN</div>
-      <h1>STAY<br><span>TOGETHER.</span></h1>
-      <p>Fight through a collapsing evacuation route, survive dynamic hordes, rescue downed teammates and reach the shelter.</p>
-      <div class="menu-actions">
-        <button id="soloBtn" class="btn primary">PLAY SOLO + BOTS</button>
-        <button id="createBtn" class="btn online">CREATE ONLINE SERVER</button>
-        <button id="joinBtn" class="btn secondary">JOIN SERVER</button>
-      </div>
-      <div id="onlineHint" class="online-hint">Online: loading Supabase Realtime…</div>
-    </div>
-    <div class="campaign-card">
-      <div class="campaign-art"><div class="moon"></div><div class="smoke s1"></div><div class="smoke s2"></div><div class="silhouette"></div></div>
-      <div class="campaign-info"><small>CAMPAIGN 01</small><h2>ASHWOOD EXODUS</h2><p>Suburb → service road → emergency shelter.</p><div class="tags"><span>1–4 PLAYERS</span><span>DIRECTOR AI</span><span>REVIVE</span><span>HORDES</span></div></div>
-    </div>
-  </div>
-</section>
-
-<div id="joinModal" class="overlay hidden">
-  <div class="panel compact">
-    <small>ONLINE CO-OP</small><h2>JOIN SERVER</h2><p>Enter the 8-character room code, or open an invite link.</p>
-    <input id="joinCode" class="big-input" maxlength="8" placeholder="AB12CD34" autocapitalize="characters" autocomplete="off">
-    <button id="joinNow" class="btn primary full">JOIN</button>
-    <button id="joinCancel" class="btn ghost full">CANCEL</button>
-  </div>
-</div>
-
-<div id="lobby" class="overlay hidden">
-  <div class="panel lobby-panel">
-    <div class="lobby-head">
-      <div><small>HOBILE ONLINE SERVER</small><div id="roomCode" class="room-code">--------</div></div>
-      <div id="netState" class="net-state">CONNECTING</div>
-    </div>
-    <div class="share-row"><button id="shareBtn" class="btn online">SHARE INVITE LINK</button><button id="copyBtn" class="btn secondary">COPY LINK</button></div>
-    <div class="lobby-grid">
-      <div class="squad-column"><h3>SQUAD</h3><div id="playerList" class="player-list"></div><div class="slot-note">Up to 4 humans. Empty slots become bots when the host starts.</div></div>
-      <div class="settings-column">
-        <label>YOUR NAME</label><div class="input-row"><input id="playerName" maxlength="16" placeholder="Survivor"><button id="saveName" class="btn mini">SAVE</button></div>
-        <label>MAP</label><select id="mapSelect"><option value="ashwood">ASHWOOD ROAD</option><option value="depot">RIVERSIDE DEPOT</option><option value="highway">BLACKOUT HIGHWAY</option></select>
-        <label>DIFFICULTY</label><select id="difficulty"><option value="normal">NORMAL</option><option value="hard">HARD</option><option value="nightmare">NIGHTMARE</option></select>
-      </div>
-    </div>
-    <div id="lobbyHint" class="lobby-hint">Waiting for players…</div>
-    <button id="readyBtn" class="btn secondary full">READY</button>
-    <button id="startOnline" class="btn primary full hidden">START CHAPTER</button>
-    <button id="leaveLobby" class="btn ghost full">LEAVE SERVER</button>
-  </div>
-</div>
-
-<div id="loading" class="overlay hidden"><div class="loading-card"><div class="brand big">HOBILE <span>OUTBREAK</span></div><h2 id="loadingMap">ASHWOOD ROAD</h2><p id="loadingText">Preparing route…</p><div class="bar"><i id="loadingBar"></i></div></div></div>
-
 <div id="hud" class="hidden">
-  <div class="squad-hud" id="squadHud"></div>
-  <div class="objective-wrap"><div id="objective">REACH THE SHELTER</div><div class="routebar"><i id="routeProgress"></i><b id="routeMarker"></b></div></div>
-  <div id="directorBadge" class="director-badge">RELIEF</div>
-  <div id="netBadge" class="net-badge">LOCAL</div>
-  <div id="waveBanner" class="wave-banner"></div>
-  <div id="centerMsg" class="center-msg"></div>
-  <div id="pickupToast" class="pickup-toast"></div>
-  <div class="weapon-panel"><small id="weaponName">RIPPER SMG</small><b><span id="ammo">32</span><em>/</em><span id="reserve">160</span></b><span id="medCount">MED ×1</span></div>
-  <div id="damageFlash" class="damage-flash"></div><div class="vignette"></div>
-  <div id="debugHud" class="debug-hud hidden"></div>
+  <div class="cinema top"></div><div class="cinema bottom"></div>
+  <div class="hudTop">
+    <div class="brandMini">HOBILE <b>OUTBREAK</b></div>
+    <div class="objectiveWrap">
+      <small>OBJECTIVE</small>
+      <strong id="objective">CLEAR THE EXTRACTION PAD</strong>
+      <div class="progress"><i id="objectiveBar"></i></div>
+    </div>
+    <div class="threat" id="threat">CALM</div>
+  </div>
+
+  <div class="healthPanel">
+    <div class="portrait"><span></span></div>
+    <div class="healthData">
+      <small>SURVIVOR</small>
+      <div class="healthRow"><b id="hpText">100</b><span>HP</span></div>
+      <div class="hpTrack"><i id="hpBar"></i></div>
+    </div>
+  </div>
+
+  <div class="weaponPanel">
+    <small id="weaponName">WARDEN AR</small>
+    <div><b id="ammo">30</b><em>/</em><span id="reserve">150</span></div>
+    <label id="reloadLabel"></label>
+  </div>
+
+  <div id="specialCard" class="specialCard hidden"><b id="specialName">STALKER</b><span id="specialHp"></span></div>
+  <div id="waveBanner" class="waveBanner"></div>
+  <div id="toast" class="toast"></div>
+  <div id="damageFlash" class="damageFlash"></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+  <div id="fps" class="fps"></div>
 </div>
 
 <div id="controls" class="hidden">
-  <div id="movePad" class="stick-pad"><div class="stick-ring"></div><div id="moveStick" class="stick-knob"></div></div>
-  <div id="aimPad" class="aim-pad"><div class="aim-label">AIM</div><div id="aimKnob" class="aim-knob"></div></div>
-  <button id="fireBtn" class="control fire">FIRE</button>
-  <button id="reloadBtn" class="control reload">R</button>
-  <button id="useBtn" class="control use">USE</button>
-  <button id="healBtn" class="control heal">MED</button>
-  <button id="swapBtn" class="control swap">SWAP</button>
-  <button id="pauseBtn" class="control pause">☰</button>
+  <div id="movePad" class="stickPad"><div class="ring"></div><div id="moveKnob" class="knob"></div><small>MOVE</small></div>
+  <div id="aimPad" class="stickPad aimPad"><div class="ring"></div><div id="aimKnob" class="knob"></div><small>AIM</small></div>
+  <button id="fireBtn" class="action fire"><span>FIRE</span></button>
+  <button id="reloadBtn" class="action reload">R</button>
+  <button id="healBtn" class="action heal">+</button>
+  <button id="swapBtn" class="action swap">↔</button>
+  <button id="pauseBtn" class="action pause">Ⅱ</button>
 </div>
 
-<div id="pause" class="overlay hidden"><div class="panel compact"><small>GAME</small><h2>PAUSED</h2><button id="resumeBtn" class="btn primary full">RESUME</button><button id="debugBtn" class="btn secondary full">TOGGLE DEBUG</button><button id="copyDebugBtn" class="btn secondary full">COPY DEBUG REPORT</button><button id="quitBtn" class="btn ghost full">QUIT TO MENU</button></div></div>
+<div id="pause" class="overlay hidden">
+  <div class="modal">
+    <small>VISUAL GATE 03</small>
+    <h2>PAUSED</h2>
+    <button id="resumeBtn" class="primary">RESUME</button>
+    <button id="restartBtn" class="secondary">RESTART ARENA</button>
+    <button id="menuBtn" class="secondary">RETURN TO MENU</button>
+  </div>
+</div>
 
-<div id="stageClear" class="overlay hidden"><div class="panel clear-panel"><small>CHAPTER COMPLETE</small><h2 id="clearTitle">SHELTER REACHED</h2><div class="results-grid"><div><b id="resultKills">0</b><small>KILLS</small></div><div><b id="resultSpecial">0</b><small>SPECIALS</small></div><div><b id="resultRevives">0</b><small>REVIVES</small></div><div><b id="resultTime">0:00</b><small>TIME</small></div></div><button id="continueBtn" class="btn primary full">RETURN TO MENU</button></div></div>
+<div id="clear" class="overlay hidden">
+  <div class="modal clearModal">
+    <small>VISUAL GATE COMPLETE</small>
+    <h2>EXTRACTION SECURED</h2>
+    <p>This is the visual/combat foundation. Online rooms and campaign chaining come after this gate is approved.</p>
+    <div class="stats">
+      <div><b id="killsStat">0</b><span>KILLS</span></div>
+      <div><b id="specialStat">0</b><span>SPECIALS</span></div>
+      <div><b id="timeStat">0:00</b><span>TIME</span></div>
+    </div>
+    <button id="againBtn" class="primary">PLAY AGAIN</button>
+  </div>
+</div>
 
-<div id="fatal" class="overlay hidden"><div class="panel compact"><small>NETWORK</small><h2>CONNECTION ERROR</h2><p id="fatalText"></p><button id="fatalClose" class="btn ghost full">BACK</button></div></div>
-
-<div id="toast" class="toast"></div>
-<pre id="selftest" class="selftest hidden"></pre>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
-<script src="core.js" defer></script>
+<script type="module" src="game.js"></script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {WEAPONS,INFECTED,makeDirector,directorStep,selectHits,formatTime} from './core.js';
+assert.equal(Object.keys(WEAPONS).length,3);
+assert.equal(Object.keys(INFECTED).length,3);
+assert(WEAPONS.shotgun.pellets>1);
+assert(INFECTED.stalker.special && INFECTED.bloated.special && !INFECTED.runner.special);
+const shooter={x:0,z:0,aimX:1,aimZ:0};const es=[{x:5,z:0,hp:10,dead:false,radius:.5},{x:-2,z:0,hp:10,dead:false,radius:.5}];
+assert.equal(selectHits(shooter,es,'ar')[0],es[0]);
+let d=makeDirector(),horde=false;for(let i=0;i<300;i++){const r=directorStep(d,{hp:100,nearby:0,ammoRatio:1},.1);d=r.director;if(r.event?.type==='horde'){horde=true;break}}assert(horde);
+assert.equal(formatTime(62),'1:02');
+console.log('PASS weapon definitions');
+console.log('PASS infected archetypes');
+console.log('PASS hitscan target selection');
+console.log('PASS director reaches horde phase');
+console.log('PASS time formatter');
+console.log('5/5 core tests passed');

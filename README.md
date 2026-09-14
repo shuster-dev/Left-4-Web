@@ -1,40 +1,32 @@
-# Hobile: Outbreak — Alpha 1.1
+# Hobile: Outbreak — Visual Gate V3
 
-This is a clean mobile-first co-op zombie campaign foundation built for iPhone Safari and Vercel.
-It uses original Hobile names, maps, art direction and code. No Left 4 Dead / Valve assets, maps,
-characters, sounds, dialogue or code are included.
+This build deliberately replaces the old flat Canvas prototype with a **3D-rendered 2.5D mobile combat slice**.
 
-## What is implemented
-- Original 2.5D side-view co-op shooter presentation with depth movement
-- Touch move stick + aim stick + Fire / Reload / Use / Med / Swap
-- Three selectable maps: Ashwood Road, Riverside Depot, Blackout Highway
-- Normal / Hard / Nightmare difficulty presets
-- Outbreak Director pacing: RELIEF → BUILD → PEAK → RECOVERY
-- Common infected + Rusher + Corroder + Screecher + Brute finale enemy
-- Ripper SMG, Breach-8 shotgun, Warden AR
-- Ammo, medkits, weapon pickups
-- Downed / bleedout / teammate revive
-- 4-survivor squad; empty online slots become AI bots
-- Final holdout and shelter completion
-- iPhone-friendly debug HUD and Copy Debug Report
+## What this build proves
+- Real GLB environment and character art instead of circles/rectangles or generated flat sprites.
+- Fixed cinematic 3/4 camera: mobile 2.5D controls without FPS free-look.
+- Real-time shadows, fog, wet/dark grading, floodlight/fire lighting, rain, flashlight, muzzle flashes, tracers, blood particles/decals, camera shake and film/vignette treatment.
+- Original Hobile survivor plus three gameplay archetypes: Runner, Stalker and Bloated.
+- Warden AR, Ripper SMG and Breach-8 gameplay stats.
+- Pressure Director: RELIEF → BUILD → PEAK → RECOVERY.
+- Hordes, special infected, healing, reload, weapon swap and extraction finale.
+- Landscape iPhone touch controls: move stick, aim stick, fire, reload, heal and weapon swap.
+- High / Performance render mode.
 
-## Real online room flow
-The Supabase project URL and browser-safe publishable key are already configured in `core.js`.
-- Create Online Server generates an 8-character room code
-- Share Invite Link opens the iPhone share sheet
-- Friends open `?room=XXXXXXXX`
-- Supabase Presence supplies the lobby roster and host election
-- WebRTC DataChannels are attempted for fast gameplay traffic
-- If direct P2P does not connect, the game falls back to lower-rate Supabase Broadcast
-- The host phone is authoritative for infected AI, Director, damage, pickups, revive and objectives
-- Host snapshots synchronize the world to clients
+## Deployment
+Upload the entire folder/ZIP to Vercel. `api/asset.js` is a same-origin cacheable proxy for the CC0 GLB pack; the browser also tries the public 3DAssets.dev CDN directly if the proxy fails.
 
-## Deploy from iPhone
-Upload this whole folder/ZIP to a Vercel project. No build command is required.
-Open the Vercel URL in Safari, rotate to landscape, then use Create Online Server.
+The only runtime library dependency is Three.js from jsDelivr. The art GLBs are from 3DAssets.dev and are CC0 1.0 Universal.
 
-## Important free-tier limitation
-This architecture is designed for friend-group play with free tiers. Direct WebRTC can fail on some
-mobile/carrier networks when NAT requires a TURN relay. In that case Hobile automatically uses the
-Supabase Broadcast fallback. This is playable at lower network update rates, but it is not an unlimited
-free dedicated game server.
+## Deliberate scope
+This is the **visual gate**, not the multiplayer build. Networking is intentionally absent until this look/combat direction is accepted. The next milestone reconnects the 4-player room flow (Supabase signalling/presence + WebRTC gameplay transport).
+
+## iPhone acceptance test
+1. Open in landscape.
+2. Let all 5 GLBs load and tap ENTER EXTRACTION.
+3. Move and aim at the same time for 2 minutes.
+4. Hold FIRE through a horde, reload, swap all three weapons and use the medkit.
+5. Survive until extraction opens (~62 seconds), clear nearby infected and enter the green beacon.
+6. Repeat in PERFORMANCE mode if framerate is poor.
+
+If assets fail, the build shows an explicit error instead of silently falling back to cheap placeholder graphics.
