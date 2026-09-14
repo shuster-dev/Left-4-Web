@@ -35,4 +35,6 @@ console.log('PASS director cycle');
 console.log('PASS timer formatting');
 console.log('PASS per-weapon ammo persistence');
 console.log('PASS infected attack-slot cap');
-console.log('11/11 combat core tests passed');
+assert(INFECTED.runner.damage<=5);assert(INFECTED.runner.cooldown>=.95);
+console.log('PASS solo pressure tuning');
+console.log('12/12 combat core tests passed');

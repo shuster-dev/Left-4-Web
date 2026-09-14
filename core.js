@@ -8,9 +8,9 @@ export const WEAPONS={
   shotgun:{name:'BREACH-8',damage:17,mag:8,reserve:56,fireRate:.62,reload:1.75,spread:.055,movingSpread:.018,recoil:.036,range:14,pellets:7,assist:.025}
 };
 export const INFECTED={
-  runner:{name:'RUNNER',hp:58,speed:1.85,damage:7,range:1.08,cooldown:.78,score:1,special:false,radius:.42},
-  stalker:{name:'STALKER',hp:165,speed:2.10,damage:13,range:1.20,cooldown:1.05,score:5,special:true,radius:.48},
-  bloated:{name:'BLOATED',hp:260,speed:.86,damage:16,range:1.28,cooldown:1.35,score:7,special:true,radius:.66}
+  runner:{name:'RUNNER',hp:58,speed:1.82,damage:5,range:1.04,cooldown:.98,score:1,special:false,radius:.42},
+  stalker:{name:'STALKER',hp:165,speed:2.05,damage:10,range:1.16,cooldown:1.22,score:5,special:true,radius:.48},
+  bloated:{name:'BLOATED',hp:260,speed:.84,damage:14,range:1.24,cooldown:1.55,score:7,special:true,radius:.66}
 };
 export function makeDirector(){return{phase:'RELIEF',timer:3,intensity:0,wave:0,elapsed:0}}
 export function directorStep(d,ctx,dt){

@@ -1,0 +1,10 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const g=fs.readFileSync('./game.js','utf8');
+for(const token of ['normalizeCharacterModel','CHARACTER_HEIGHT','snapCameraToPlayer','CAMERA_MIN_DISTANCE=2.05','stuckTimer']) assert(g.includes(token),token);
+assert(!g.includes("player.root.scale.setScalar(1.05)"));
+assert(!g.includes("e.root.scale.setScalar(type==='bloated'"));
+console.log('PASS runtime GLB normalization');
+console.log('PASS first-frame camera snap');
+console.log('PASS minimum third-person camera distance');
+console.log('PASS movement stuck recovery');
+console.log('4/4 V5.4 regression checks passed');

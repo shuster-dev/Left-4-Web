@@ -1,6 +1,6 @@
 
-> hobile-outbreak-third-person-stability-v5-3@5.3.0 test
-> node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs
+> hobile-outbreak-third-person-stability-v5-4@5.4.0 test
+> node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs && node test-v54.mjs
 
 PASS weapon roster
 PASS infected roster
@@ -13,13 +13,10 @@ PASS director cycle
 PASS timer formatting
 PASS per-weapon ammo persistence
 PASS infected attack-slot cap
-11/11 combat core tests passed
-
-PASS camera hard minimum
-PASS foreground occluder fade
-PASS survivor frustum protection
-PASS open-clearance spawn
-PASS player fill light
-PASS immediate service worker update
-PASS build label V5.3
-7/7 V5.3 static regression checks passed
+PASS solo pressure tuning
+12/12 combat core tests passed
+PASS runtime GLB normalization
+PASS first-frame camera snap
+PASS minimum third-person camera distance
+PASS movement stuck recovery
+4/4 V5.4 regression checks passed
