@@ -1,15 +1,29 @@
-PASS stage bounds
-PASS weapon roster
-PASS infected roster
-PASS weapon upgrades
-PASS upgrade economy
-PASS room code generation
-PASS presence + host election
-PASS enemy budget chooser
-PASS shooting target selection
-PASS director milestone horde
-10/10 core tests passed
+Hobile: Outbreak — Alpha 1.1
+Verification date: 2026-09-14
 
-PASS core.js syntax
-PASS network.js syntax
-PASS game.js syntax
+PASS — core.js JavaScript syntax (`node --check`)
+PASS — HTML parses and all 72 JavaScript DOM ID references exist in index.html
+PASS — vercel.json parses as valid JSON
+PASS — deploy files present: index.html, style.css, core.js, vercel.json, README.md
+PASS — logic VM smoke test initializes Ashwood map
+PASS — logic VM smoke test initializes four survivors
+PASS — three weapon definitions / shotgun pellet logic
+PASS — common + special infected spawning
+PASS — shooting damages infected
+PASS — HP <= 0 enters Downed rather than instant death
+PASS — medkit heal flow
+PASS — finale timer opens shelter
+PASS — Supabase Project URL + publishable browser key configured
+PASS — cryptographic 8-character room code format
+PASS — Presence keeps stable join timestamp (host election does not change when Ready/Name changes)
+PASS — client accepts authoritative host Chapter Complete message
+PASS — mixed P2P/Supabase room detects fallback peer for reduced-rate networking
+
+NOT LIVE-VERIFIED IN THIS CONTAINER
+- Real iPhone Safari rendering/touch behavior (must be checked after Vercel deploy)
+- Supabase Realtime connection to the user's project (container has no outbound runtime access)
+- WebRTC iPhone-to-iPhone NAT behavior / carrier-network fallback
+- Multi-device latency and host migration under real disconnects
+
+The code includes a built-in ?test=1 logic self-test screen for debugging, plus an in-game
+COPY DEBUG REPORT button because the intended development workflow is iPhone-only.

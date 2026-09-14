@@ -1,34 +1,40 @@
-# Hobile: Outbreak — 2.5D Co-op Zombie Campaign
+# Hobile: Outbreak — Alpha 1.1
 
-A clean restart of the project around a mobile-first 2.5D co-op structure.
+This is a clean mobile-first co-op zombie campaign foundation built for iPhone Safari and Vercel.
+It uses original Hobile names, maps, art direction and code. No Left 4 Dead / Valve assets, maps,
+characters, sounds, dialogue or code are included.
 
-## What is playable in V1
-- Original side-view / 2.5D chibi survivor presentation
-- Chapter 1: Ashwood Road
-- Route progression and safehouse objective
-- Dynamic AI Director that alternates pressure and recovery
-- Common infected + Rusher + Leaper + Corroder + Caller + Brute
-- Dynamic hordes and a final holdout
-- Ripper SMG, Breach-8 shotgun and Warden AR
-- Ammo, medkits, temporary-health stim, weapon pickups
-- Persistent Scrap + Armory weapon upgrades in localStorage
-- Incapacitation/downed state and co-op revive interaction
-- Mobile joystick, Fire, Jump, Reload, Use and Swap
-- Local synthesized SFX, particles, recoil/screen shake and parallax environment
-- Online 2-player co-op rooms using Supabase Realtime Presence + Broadcast
-- Host simulation for infected/world snapshots
-- Shareable room link
+## What is implemented
+- Original 2.5D side-view co-op shooter presentation with depth movement
+- Touch move stick + aim stick + Fire / Reload / Use / Med / Swap
+- Three selectable maps: Ashwood Road, Riverside Depot, Blackout Highway
+- Normal / Hard / Nightmare difficulty presets
+- Outbreak Director pacing: RELIEF → BUILD → PEAK → RECOVERY
+- Common infected + Rusher + Corroder + Screecher + Brute finale enemy
+- Ripper SMG, Breach-8 shotgun, Warden AR
+- Ammo, medkits, weapon pickups
+- Downed / bleedout / teammate revive
+- 4-survivor squad; empty online slots become AI bots
+- Final holdout and shelter completion
+- iPhone-friendly debug HUD and Copy Debug Report
 
-## Technical rules
-- Static hosting on Vercel
-- No paid game server
-- No database tables required for the room
-- No external image/model asset packs
-- One external browser library: Supabase JS, used only for online networking
-- The entire renderer/gameplay engine is plain HTML Canvas + JavaScript
+## Real online room flow
+The Supabase project URL and browser-safe publishable key are already configured in `core.js`.
+- Create Online Server generates an 8-character room code
+- Share Invite Link opens the iPhone share sheet
+- Friends open `?room=XXXXXXXX`
+- Supabase Presence supplies the lobby roster and host election
+- WebRTC DataChannels are attempted for fast gameplay traffic
+- If direct P2P does not connect, the game falls back to lower-rate Supabase Broadcast
+- The host phone is authoritative for infected AI, Director, damage, pickups, revive and objectives
+- Host snapshots synchronize the world to clients
 
-## IP rule
-This project does NOT copy Left 4 Dead or MapleStory assets, characters, maps, names,
-UI, music, dialogue or code. It takes inspiration from the broad co-op campaign
-structure (team traversal, hordes, special infected, revives and dynamic pacing)
-and expresses it with original Hobile mechanics, names and artwork.
+## Deploy from iPhone
+Upload this whole folder/ZIP to a Vercel project. No build command is required.
+Open the Vercel URL in Safari, rotate to landscape, then use Create Online Server.
+
+## Important free-tier limitation
+This architecture is designed for friend-group play with free tiers. Direct WebRTC can fail on some
+mobile/carrier networks when NAT requires a TURN relay. In that case Hobile automatically uses the
+Supabase Broadcast fallback. This is playable at lower network update rates, but it is not an unlimited
+free dedicated game server.
