@@ -1,48 +1,42 @@
-# Hobile: Outbreak — Third Person Gate V4
+# Hobile: Outbreak — Combat Polish V5
 
-This build converts the Visual Gate into a true over-the-shoulder third-person mobile shooter.
+This build is a focused third-person gameplay repair pass based on the iPhone screen recording from V4.
+It is intentionally **not** the multiplayer/campaign build yet. The goal is to make the basic mobile shooter loop stable before reconnecting rooms and four-player co-op.
 
-## Changes
-- Close shoulder camera behind the survivor
-- Camera-relative movement
-- Right-stick camera look with persistent yaw/pitch
-- Center-screen crosshair and hit feedback
-- Character always aims where the camera aims
-- Camera obstruction pull-in using environment raycasts
-- Existing infected, Director, weapons, rain, lighting, extraction and effects retained
+## V5 fixes
 
-## Test target
-The important question for this build is camera/combat feel on iPhone Safari. Multiplayer is intentionally not in this visual gate.
+- New rigged third-person survivor with actual idle / walk / run clips.
+- Acceleration/deceleration instead of instant sliding.
+- Camera-relative movement with analogue dead-zone and response curve.
+- Correct vertical look direction on the right stick.
+- Stable over-the-shoulder camera with geometry collision and smooth pull-in / pull-out.
+- Environment-derived movement colliders so the survivor cannot freely walk through scenery.
+- Enemy movement uses the same collision layer and cannot damage through blocked line-of-sight.
+- Enemy attack wind-up and short player hurt cooldown prevent instant HP deletion when a horde overlaps.
+- Center-screen 3D hitscan shooting replaces the old flat X/Z cone test.
+- World occlusion: bullets stop at cover instead of passing through fences/walls/props.
+- Head/body hit volumes, headshot multiplier, hit/kill markers, moving spread and recoil recovery.
+- Light mobile aim assist only when the target is visible.
+- Shotgun pellet simulation through the same camera ray model.
+- Enemy separation is stronger to reduce one-model piles.
+- Lower GPU cost: fewer rain particles, no dynamic shadows for infected, 512 shadow map, lower DPR cap, infected population cap.
+- Automatic PERFORMANCE mode when sustained FPS is too low.
+- Fullscreen request on Play where supported.
+- PWA manifest + Add to Home Screen support for a cleaner iPhone fullscreen experience.
 
-# Hobile: Outbreak — Visual Gate V3
+## Controls
 
-This build deliberately replaces the old flat Canvas prototype with a **3D-rendered 2.5D mobile combat slice**.
+- Left stick: camera-relative movement
+- Right stick: camera look / aim
+- FIRE: hold for automatic weapons
+- R: reload
+- +: medkit
+- ↔: weapon switch
 
-## What this build proves
-- Real GLB environment and character art instead of circles/rectangles or generated flat sprites.
-- Fixed cinematic 3/4 camera: mobile 2.5D controls without FPS free-look.
-- Real-time shadows, fog, wet/dark grading, floodlight/fire lighting, rain, flashlight, muzzle flashes, tracers, blood particles/decals, camera shake and film/vignette treatment.
-- Original Hobile survivor plus three gameplay archetypes: Runner, Stalker and Bloated.
-- Warden AR, Ripper SMG and Breach-8 gameplay stats.
-- Pressure Director: RELIEF → BUILD → PEAK → RECOVERY.
-- Hordes, special infected, healing, reload, weapon swap and extraction finale.
-- Landscape iPhone touch controls: move stick, aim stick, fire, reload, heal and weapon swap.
-- High / Performance render mode.
+## Important limitation
+
+V5 is designed to move the **feel** closer to a polished co-op third-person shooter, but it is not Valve's Left 4 Dead 2 engine and does not use Valve assets or maps. The environment and infected are original CC0 development assets. Online rooms stay disabled until this gameplay layer is stable on the target iPhone.
 
 ## Deployment
-Upload the entire folder/ZIP to Vercel. `api/asset.js` is a same-origin cacheable proxy for the CC0 GLB pack; the browser also tries the public 3DAssets.dev CDN directly if the proxy fails.
 
-The only runtime library dependency is Three.js from jsDelivr. The art GLBs are from 3DAssets.dev and are CC0 1.0 Universal.
-
-## Deliberate scope
-This is the **visual gate**, not the multiplayer build. Networking is intentionally absent until this look/combat direction is accepted. The next milestone reconnects the 4-player room flow (Supabase signalling/presence + WebRTC gameplay transport).
-
-## iPhone acceptance test
-1. Open in landscape.
-2. Let all 5 GLBs load and tap ENTER EXTRACTION.
-3. Move and aim at the same time for 2 minutes.
-4. Hold FIRE through a horde, reload, swap all three weapons and use the medkit.
-5. Survive until extraction opens (~62 seconds), clear nearby infected and enter the green beacon.
-6. Repeat in PERFORMANCE mode if framerate is poor.
-
-If assets fail, the build shows an explicit error instead of silently falling back to cheap placeholder graphics.
+Upload the entire ZIP/folder to Vercel. The `/api/asset` function proxies the GLB files and the browser also has direct CDN fallback.

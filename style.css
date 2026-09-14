@@ -35,3 +35,22 @@ button{font:inherit;color:inherit;border:0} .hidden{display:none!important}
 .fire{right:calc(142px + var(--sr));bottom:calc(22px + var(--sb));width:64px;height:64px}
 .reload{right:calc(146px + var(--sr));bottom:calc(94px + var(--sb))}.heal{right:calc(190px + var(--sr));bottom:calc(91px + var(--sb))}.swap{right:calc(213px + var(--sr));bottom:calc(40px + var(--sb))}
 @media(max-height:470px) and (orientation:landscape){.aimPad{width:96px;height:96px}.aimPad .knob{left:32px;top:32px;width:32px;height:32px}.fire{right:calc(120px + var(--sr));width:56px;height:56px}.reload{right:calc(123px + var(--sr));bottom:calc(82px + var(--sb))}.heal{right:calc(163px + var(--sr));bottom:calc(80px + var(--sb))}.swap{right:calc(185px + var(--sr));bottom:calc(35px + var(--sb))}}
+
+/* Combat Polish V5 */
+.crosshair{--spread:12px;width:46px;height:46px;transition:filter .05s}
+.crosshair i{transition:left .055s,right .055s,top .055s,bottom .055s,background .05s}
+.crosshair i:nth-child(1){width:7px;height:2px;left:calc(50% - var(--spread) - 7px);top:22px}
+.crosshair i:nth-child(2){width:7px;height:2px;right:calc(50% - var(--spread) - 7px);top:22px}
+.crosshair i:nth-child(3){width:2px;height:7px;left:22px;top:calc(50% - var(--spread) - 7px)}
+.crosshair i:nth-child(4){width:2px;height:7px;left:22px;bottom:calc(50% - var(--spread) - 7px)}
+.crosshair b{left:21px;top:21px}
+.crosshair.head b{background:#ffd35e;box-shadow:0 0 12px #ffd35ecc}
+.crosshair.kill{filter:drop-shadow(0 0 7px #ff3948)}
+.crosshair.kill b{background:#ff3948;transform:scale(1.55)}
+#controls .action:active{transform:scale(.94);filter:brightness(1.2)}
+.stickPad{backdrop-filter:blur(2px)}
+@media(max-height:390px) and (orientation:landscape){
+  .hudTop{top:calc(5px + var(--st))}.brandMini{display:none}.objectiveWrap strong{font-size:7px}.threat{padding:4px 7px}
+  .healthPanel,.weaponPanel{transform:scale(.78);bottom:calc(4px + var(--sb))}.healthPanel{transform-origin:left bottom}.weaponPanel{transform-origin:right bottom}
+  .stickPad{bottom:calc(13px + var(--sb))}.aimPad{bottom:calc(13px + var(--sb))}.fire{bottom:calc(14px + var(--sb))}.reload{bottom:calc(75px + var(--sb))}.heal{bottom:calc(73px + var(--sb))}.swap{bottom:calc(28px + var(--sb))}
+}

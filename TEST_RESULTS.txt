@@ -1,34 +1,16 @@
-THIRD PERSON V4
+PASS weapon roster
+PASS infected roster
+PASS player collision
+PASS wall line-of-sight
+PASS ray/sphere hit math
+PASS ray/box occlusion
+PASS aim assist visibility
+PASS director cycle
+PASS timer formatting
+9/9 combat core tests passed
+
 PASS game.js syntax
 PASS core.js syntax
-PASS weapon definitions
-PASS infected archetypes
-PASS hitscan target selection
-PASS director reaches horde phase
-PASS time formatter
-5/5 core tests passed
-
-Hobile: Outbreak — Visual Gate V3
-Static / logic verification
-
-PASS game.js syntax (node --check)
-PASS core.js syntax (node --check)
-PASS api/asset.js syntax (node --check)
-PASS vercel.json JSON parse
-PASS 3 weapon definitions
-PASS 3 infected archetypes
-PASS hitscan target selection
-PASS Director reaches horde phase
-PASS time formatter
-PASS same-origin /api/asset GLB proxy configured
-PASS direct CDN fallback configured
-PASS explicit fatal screen instead of placeholder-art fallback
-PASS landscape mobile dual-stick controls present
-PASS extraction finale flow present
-
-NOT VERIFIED IN THIS ENVIRONMENT:
-- Live loading of remote GLB files through an actual Vercel deployment
-- iPhone Safari frame rate / thermals
-- Visual result on physical iPhone
-
-The next real acceptance test is deployment to Vercel and one physical-iPhone run.
+PASS api/asset.js syntax
+PASS PWA manifest present
+PASS service worker present

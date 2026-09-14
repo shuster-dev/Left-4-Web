@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 <meta name="theme-color" content="#05080b" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icon-180.png" />
 <meta name="mobile-web-app-capable" content="yes" />
-<title>Hobile: Outbreak — Third Person Gate</title>
+<title>Hobile: Outbreak — Combat Polish V5</title>
 <link rel="stylesheet" href="style.css" />
 <script type="importmap">
 {
@@ -23,14 +26,14 @@
   <div class="bootPanel">
     <div class="kicker">HOBILE // CAMPAIGN PROTOTYPE</div>
     <h1>OUTBREAK</h1>
-    <div class="chapter">THIRD PERSON GATE 04 · FOREST EXTRACTION</div>
-    <p>This build changes the game to a true over-the-shoulder third-person shooter: camera behind the survivor, camera-relative movement, center-screen aiming and mobile look controls.</p>
+    <div class="chapter">COMBAT POLISH 05 · FOREST EXTRACTION</div>
+    <p>This pass focuses only on shooter feel: collision-safe movement, stable shoulder camera, center-ray shooting, recoil, aim assist, enemy attack wind-up and mobile performance.</p>
     <button id="startBtn" class="primary" disabled>LOADING ASSETS…</button>
     <div class="loadTrack"><i id="loadBar"></i></div>
     <div id="loadText" class="loadText">Preparing renderer…</div>
     <div class="qualityRow">
       <button id="qualityBtn" class="chip">QUALITY: HIGH</button>
-      <button id="controlsBtn" class="chip">THIRD PERSON</button>
+      <button id="controlsBtn" class="chip">COLLISION + HITSCAN</button>
     </div>
   </div>
 </div>
@@ -78,7 +81,7 @@
   </div>
 
   <div id="crosshair" class="crosshair"><i></i><i></i><i></i><i></i><b></b></div>
-  <div id="cameraHint" class="cameraHint">LEFT STICK MOVE · RIGHT STICK LOOK</div>
+  <div id="cameraHint" class="cameraHint">MOVE · LOOK · CENTER CROSSHAIR = SHOT</div>
   <div id="specialCard" class="specialCard hidden"><b id="specialName">STALKER</b><span id="specialHp"></span></div>
   <div id="waveBanner" class="waveBanner"></div>
   <div id="toast" class="toast"></div>
@@ -100,7 +103,7 @@
 
 <div id="pause" class="overlay hidden">
   <div class="modal">
-    <small>THIRD PERSON GATE 04</small>
+    <small>COMBAT POLISH 05</small>
     <h2>PAUSED</h2>
     <button id="resumeBtn" class="primary">RESUME</button>
     <button id="restartBtn" class="secondary">RESTART ARENA</button>
@@ -112,7 +115,7 @@
   <div class="modal clearModal">
     <small>VISUAL GATE COMPLETE</small>
     <h2>EXTRACTION SECURED</h2>
-    <p>This gate tests the third-person camera and combat feel. Online rooms and campaign chaining stay separate until this camera/gameplay direction is approved.</p>
+    <p>This build isolates movement, camera, shooting, infected pressure and iPhone performance before campaign networking is reconnected.</p>
     <div class="stats">
       <div><b id="killsStat">0</b><span>KILLS</span></div>
       <div><b id="specialStat">0</b><span>SPECIALS</span></div>

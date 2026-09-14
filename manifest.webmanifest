@@ -1,0 +1,10 @@
+{
+  "name": "Hobile: Outbreak",
+  "short_name": "Hobile",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#030507",
+  "theme_color": "#030507",
+  "icons": [{"src":"icon-180.png","sizes":"180x180","type":"image/png"}]
+}
