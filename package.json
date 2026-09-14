@@ -1,9 +1,7 @@
 {
-  "name": "hobile-outbreak-third-person-stability-v5-4",
-  "private": true,
-  "type": "module",
-  "version": "5.4.0",
-  "scripts": {
-    "test": "node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs && node test-v54.mjs"
-  }
+  "name":"hobile-outbreak-third-person-recovery-v5-5",
+  "private":true,
+  "type":"module",
+  "version":"5.5.0",
+  "scripts":{"test":"node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs && node test-v55.mjs"}
 }

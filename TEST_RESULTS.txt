@@ -1,22 +1,24 @@
+Hobile Outbreak Third Person Recovery V5.5
 
-> hobile-outbreak-third-person-stability-v5-4@5.4.0 test
-> node --check game.js && node --check core.js && node --check api/asset.js && node test-core.mjs && node test-v54.mjs
+Automated checks:
+- node --check game.js: PASS
+- node --check core.js: PASS
+- node --check api/asset.js: PASS
+- Combat core tests: 12/12 PASS
+- V5.5 regression tests: 8/8 PASS
 
-PASS weapon roster
-PASS infected roster
-PASS player collision
-PASS wall line-of-sight
-PASS ray/sphere hit math
-PASS ray/box occlusion
-PASS aim assist visibility
-PASS director cycle
-PASS timer formatting
-PASS per-weapon ammo persistence
-PASS infected attack-slot cap
-PASS solo pressure tuning
-12/12 combat core tests passed
-PASS runtime GLB normalization
-PASS first-frame camera snap
-PASS minimum third-person camera distance
-PASS movement stuck recovery
-4/4 V5.4 regression checks passed
+Regression coverage based on the 2026-09-14 iPhone recording:
+- touch input reaches the movement stick
+- broad environment AABB lock removed
+- conservative movement collision
+- automatic stuck/collision recovery
+- metre-scale survivor asset with ground origin
+- actor runtime X/Z recentering removed
+- actor mixers attach to imported models
+- opening infected forced into visible front arc
+- camera broad AABBs disabled in favour of exact mesh rays
+- service-worker cache revision V5.5
+
+Not verified here:
+- final rendering/performance on the user's physical iPhone Safari
+- Vercel serverless asset proxy execution after deployment
